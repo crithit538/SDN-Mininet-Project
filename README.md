@@ -120,23 +120,18 @@ pingall
 ##  Screenshots
 
 ### 🔹 Learning Mode
-
 ![Learning](sdn_screenshots/learning.png)
 
 ### 🔹 Hub Mode
-
 ![Hub](sdn_screenshots/hub.png)
 
 ### 🔹 Ping Result
-
 ![Ping](sdn_screenshots/ping.png)
 
 ### 🔹 Network Topology
-
 ![Topology](sdn_screenshots/net.png)
 
 ### 🔹 Dump Output
-
 ![Dump](sdn_screenshots/dump.png)
 
 ---
