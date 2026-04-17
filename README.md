@@ -1,22 +1,29 @@
-# 🌐 SDN Implementation using Mininet and POX Controller
 
-##  Objective
+##  Introduction
+#  SDN Implementation using Mininet and POX Controller
 
-To design and simulate a Software Defined Network (SDN) using Mininet and a POX controller, demonstrating controller–switch interaction and flow-based packet forwarding.
+##  Student Details
+
+**Name:** Vaishnavi
+**SRN:** PES1UG24CS514
+
+---
+
+## Objective
+
+To implement Software Defined Networking (SDN) using Mininet and POX controller, and demonstrate both dynamic and static routing techniques.
 
 ---
 
 ##  Introduction
 
-Software Defined Networking (SDN) separates the control plane from the data plane, allowing centralized control of network behavior.
-
-In this project, Mininet is used to emulate a network topology, while the POX controller dynamically manages packet forwarding by installing flow rules in switches.
+Software Defined Networking (SDN) separates the control plane from the data plane. A centralized controller manages how packets are forwarded in the network.
 
 ---
 
-## 🛠️ Tools & Technologies
+##  Tools Used
 
-* Mininet (Network Emulator)
+* Mininet
 * POX Controller
 * OpenFlow Protocol
 * Ubuntu Linux
@@ -29,91 +36,46 @@ In this project, Mininet is used to emulate a network topology, while the POX co
 h1 ---- s1 ---- s2 ---- h2
 ```
 
-* h1, h2 → Hosts
-* s1, s2 → Switches
-* Controller → POX
-
 ---
 
-## ⚙️ Implementation Steps
+##  Scenario 1: Learning Switch (Dynamic Routing)
 
-### 🔹 Install Mininet
-
-```
-sudo apt install mininet -y
-```
-
-### 🔹 Clone POX Controller
-
-```
-git clone https://github.com/noxrepo/pox
-cd pox
-```
-
----
-
-##  Scenario 1: Learning Switch Mode
-
-### ▶️ Run Controller
+### Command:
 
 ```
 python3 pox.py forwarding.l2_learning
 ```
 
-### ▶️ Run Mininet
-
-```
-sudo mn --controller=remote --topo linear,2
-```
-
-### ▶️ Test Connectivity
-
-```
-pingall
-```
-
-### 📊 Observation
+### Observation:
 
 * Controller learns MAC addresses
-* Flow rules are installed dynamically
-* Efficient packet forwarding
+* Installs flow rules dynamically
+* Efficient forwarding
 
 ---
 
-##  Scenario 2: Hub Mode
+##  Scenario 2: Hub Mode (Dynamic Routing)
 
-### ▶️ Run Controller
+### Command:
 
 ```
 python3 pox.py forwarding.hub
 ```
 
-### ▶️ Run Mininet
+### Observation:
 
-```
-sudo mn --controller=remote --topo linear,2
-```
-
-### ▶️ Test Connectivity
-
-```
-pingall
-```
-
-### 📊 Observation
-
-* Packets are flooded to all ports
-* No learning mechanism
+* Packets are flooded
+* No learning
 * Less efficient
 
 ---
 
-##  Results & Analysis
+##  Results Comparison
 
-| Mode            | Behavior               | Efficiency |
-| --------------- | ---------------------- | ---------- |
-| Hub Mode        | Flooding               | Low        |
-| Learning Switch | Intelligent Forwarding | High       |
+| Mode     | Behavior    | Efficiency |
+| -------- | ----------- | ---------- |
+| Hub      | Flooding    | Low        |
+| Learning | Intelligent | High       |
 
 ---
 
@@ -125,27 +87,77 @@ pingall
 ### 🔹 Hub Mode
 ![Hub](sdn_screenshots/hub.png)
 
+<<<<<<< HEAD
 ### 🔹 Ping Result
+=======
+### 🔹 Ping Result (Learning)
+
+>>>>>>> 8f8307a (Final polished README)
 ![Ping](sdn_screenshots/ping.png)
+
+### 🔹 Ping Result (Hub)
+
+![Ping Hub](sdn_screenshots/ping_hub.png)
 
 ### 🔹 Network Topology
 ![Topology](sdn_screenshots/net.png)
 
+<<<<<<< HEAD
 ### 🔹 Dump Output
+=======
+### 🔹 Node Details
+
+>>>>>>> 8f8307a (Final polished README)
 ![Dump](sdn_screenshots/dump.png)
 
 ---
 
-##  Validation
+##  Static Routing using Manual Flow Rules
 
-* Connectivity verified using `pingall`
+In addition to controller-based dynamic routing, static routing was implemented by manually installing flow rules in the switches using Open vSwitch (`ovs-ofctl`).
+
+### Commands Used
+
+```
+sudo ovs-ofctl add-flow s1 in_port=1,actions=output:2
+sudo ovs-ofctl add-flow s1 in_port=2,actions=output:1
+
+sudo ovs-ofctl add-flow s2 in_port=1,actions=output:2
+sudo ovs-ofctl add-flow s2 in_port=2,actions=output:1
+```
+
+---
+
+### Observation
+
+* Traffic followed a predefined path between hosts
+* No packet flooding occurred
+* No learning mechanism was used
+* Switches forwarded packets strictly based on installed rules
+
+---
+
+###  Verification
+
+* Connectivity tested using pingall
 * Achieved 0% packet loss
-* Successful controller–switch interaction
+* Flow rules verified using:
+
+```
+sudo ovs-ofctl dump-flows s1
+sudo ovs-ofctl dump-flows s2
+```
+
+---
+
+##  Static Routing Screenshots
+
+### 🔹 Flow Rules Installed
+
+![Static Flows](sdn_screenshots/static_flows.png)
 
 ---
 
 ##  Conclusion
 
-This project demonstrates the working of Software Defined Networking using Mininet and POX controller. The controller dynamically installs flow rules, enabling efficient communication. The comparison between hub and learning switch highlights the advantages of intelligent forwarding.
-
----
+This project demonstrates both dynamic and static routing in SDN. The controller-based approach enables intelligent forwarding, while manual flow installation allows precise control over packet paths.
